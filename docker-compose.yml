@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+  db:
+    image: mongo:latest
+    restart: unless-stopped
+    ports:
+      - 27017:27017
+    volumes:
+      - ./docker-entrypoint-initdb.d/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    env_file:
+      - .mongo.env
+    command: [ --auth ]
