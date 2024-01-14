@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // Init database
-// getConnection().then(() => console.log('🖥 MongoDB Connected Successfully.'));
+getConnection().then(() => console.log('🖥 MongoDB Connected Successfully.'));
 
 // Init server
 const port: number = (process.env.PORT) ? parseInt(process.env.PORT) : 8080;
