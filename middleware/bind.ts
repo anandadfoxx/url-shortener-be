@@ -2,7 +2,7 @@ import { NextFunction, Request, RequestHandler, Response } from "express";
 import { sendError } from "../utils/send";
 import ParameterOptions from "../interfaces/parameter";
 
-export default function bindBodyOrError(params: ParameterOptions[]): RequestHandler {
+export default function bindBodyOrError(params?: ParameterOptions[]): RequestHandler {
   return function(req: Request, res: Response, next: NextFunction) {
     let body: object;
     switch (req.method) {
@@ -17,12 +17,16 @@ export default function bindBodyOrError(params: ParameterOptions[]): RequestHand
         body = req.body;
         break;
     }
-    
+
     let invalidParams: string[] = [];
     
-    params.forEach((key: ParameterOptions) => {
-      if (!key.emptyable && ((body as Record<string, any>)[key.param] === null || (body as Record<string, any>)[key.param] === undefined)) {
-        invalidParams.push(key.param);
+    params?.forEach((key: ParameterOptions) => {
+      if ((body as Record<string, any>)[key.param] === null || (body as Record<string, any>)[key.param] === undefined) {
+        if (!key.emptyable) {
+          invalidParams.push(key.param);
+        } else {
+          (body as Record<string, any>)[key.param] = key.defaultValue;
+        }
       }
     });
     
@@ -30,8 +34,8 @@ export default function bindBodyOrError(params: ParameterOptions[]): RequestHand
       sendError(res, 400, `Missing value of ${invalidParams.join(', ')}`);
       return;
     }
-
-    res.locals['body'] = body;
+    
+    req.data = body;
     next();
   }
 }
