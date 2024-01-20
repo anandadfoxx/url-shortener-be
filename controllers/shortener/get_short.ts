@@ -1,8 +1,8 @@
 import { Response } from "express";
 import getConnection from "../../db/connection";
-import { DbCollectionName } from "../../utils/enum";
+import { DbCollectionName } from "../../utils/misc/enum";
 import { urlShortSchema } from "../../db/schema";
-import { sendError, sendSuccess } from "../../utils/send";
+import { sendError, sendSuccess } from "../../utils/misc/send";
 import { RequestWithJsonAndJwt } from "../../interfaces/request_jsonjwt";
 
 export default async function getShortLink(req: RequestWithJsonAndJwt, res: Response) {
@@ -18,7 +18,8 @@ export default async function getShortLink(req: RequestWithJsonAndJwt, res: Resp
       'created_date': uriEntry['createdDate'],
       'updated_date': uriEntry['updatedDate'],
       'short_uri': uriEntry['short_uri'],
-      'long_uri': uriEntry['long_uri']
+      'long_uri': uriEntry['long_uri'],
+      'author': uriEntry['author']
     });
   } catch (err: any) {
     if (err instanceof Error) {
