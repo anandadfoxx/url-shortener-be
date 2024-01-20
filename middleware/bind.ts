@@ -1,16 +1,17 @@
 import { NextFunction, Request, RequestHandler, Response } from "express";
 import { sendError } from "../utils/send";
 import ParameterOptions from "../interfaces/parameter";
+import { RequestWithJsonAndJwt } from "../interfaces/request_jsonjwt";
 
 export default function bindBodyOrError(params?: ParameterOptions[]): RequestHandler {
   return function(req: Request, res: Response, next: NextFunction) {
     let body: object;
     switch (req.method) {
       case 'GET':
-        body = req.query;
+        body = (Object.keys(req.params).length > 0) ? req.params : req.query;
         break;
       case 'DELETE':
-        body = req.query;
+        body = (Object.keys(req.params).length > 0) ? req.params : req.query;
         break;
       default:
         // POST and PUT method, parse the request body
@@ -35,7 +36,7 @@ export default function bindBodyOrError(params?: ParameterOptions[]): RequestHan
       return;
     }
     
-    req.data = body;
+    (req as RequestWithJsonAndJwt).data = body;
     next();
   }
 }
