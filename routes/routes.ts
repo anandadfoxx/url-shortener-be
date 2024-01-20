@@ -8,7 +8,7 @@ import login from '../controllers/user/login';
 import signup from '../controllers/user/signup';
 import authorize from '../middleware/user/authorization';
 import authenticate from '../middleware/user/authentication';
-import { UserRole } from '../utils/enum';
+import { UserRole } from '../utils/misc/enum';
 import ShortenerQueryParams from '../parameters/short_query';
 import getShortLink from '../controllers/shortener/get_short';
 import ShortenerEntryOptions from '../parameters/short_entry';
@@ -20,9 +20,11 @@ app.use(log);
 app.use(cors());
 app.use(express.json());
 
+// User Profile Section
 app.get('/ping', authenticate, authorize(UserRole.USER_GUEST), ping);
 app.post('/login', bindBodyOrError(UserParams), login);
 app.post('/signup', bindBodyOrError(UserParams), signup);
+
 
 app.get('/:uriShort', bindBodyOrError(ShortenerQueryParams), getShortLink);
 app.post('/short', authenticate, authorize(UserRole.USER_MEMBER), bindBodyOrError(ShortenerEntryOptions), createShortLink);

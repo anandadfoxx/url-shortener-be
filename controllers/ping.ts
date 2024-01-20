@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { sendSuccess } from "../utils/send";
+import { sendSuccess } from "../utils/misc/send";
 
-export default function ping(req: Request, res: Response) {
+export default function ping(_: Request, res: Response) {
   sendSuccess(res, {
-    'message': 'Pong!'
+    'description': 'Pong!'
   });
 };
