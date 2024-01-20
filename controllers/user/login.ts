@@ -1,19 +1,21 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import { sendError, sendSuccess } from "../../utils/send";
 import getConnection from "../../db/connection";
 import { userSchema } from "../../db/schema";
 import { verifyPassword } from "../../utils/bcrypt";
 import jwt from 'jsonwebtoken';
+import { DbCollectionName } from "../../utils/enum";
+import { RequestWithJsonAndJwt } from "../../interfaces/request_jsonjwt";
 
-export default async function login(req: Request, res: Response) {
+export default async function login(req: RequestWithJsonAndJwt, res: Response) {
   try {
-    const db = (await getConnection()).model('users', userSchema);
+    const db = (await getConnection()).model(DbCollectionName.Users, userSchema);
 
     const user = await db.findOne({
-      email: req.data['email']
+      email: req!.data!['email']
     });
     if (!user) throw new Error();
-    if (!await verifyPassword(req.data['password'], user.password!)) throw new Error();
+    if (!await verifyPassword(req!.data!['password'], user.password!)) throw new Error();
 
     // Login success, create JWT for next 6 hours
     const token = jwt.sign({

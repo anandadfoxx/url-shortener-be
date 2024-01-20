@@ -15,6 +15,12 @@ export const urlShortSchema = new Schema({
   createdDate: Date,
   updatedDate: Date,
   author: String,
-  short_uri: String,
-  long_uri: String
+  short_uri: {
+    type: String,
+    unique: true
+  },
+  long_uri: {
+    type: String,
+    unique: true
+  }
 });
