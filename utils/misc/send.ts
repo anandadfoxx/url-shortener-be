@@ -7,6 +7,6 @@ export function sendSuccess(res: Response, data: object) {
 export function sendError(res: Response, errorCode: number, msg: string) {
   res.status(errorCode).json({
     'success': false,
-    'message': msg
+    'description': msg
   });
 };

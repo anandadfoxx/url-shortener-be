@@ -1,7 +1,7 @@
 import { NextFunction, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { sendError } from '../../utils/send';
-import {UserRole} from '../../utils/enum';
+import { sendError } from '../../utils/misc/send';
+import {UserRole} from '../../utils/misc/enum';
 import { RequestWithJsonAndJwt } from '../../interfaces/request_jsonjwt';
 
 export default function authorize(role: UserRole) {

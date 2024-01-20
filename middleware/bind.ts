@@ -1,5 +1,5 @@
 import { NextFunction, Request, RequestHandler, Response } from "express";
-import { sendError } from "../utils/send";
+import { sendError } from "../utils/misc/send";
 import ParameterOptions from "../interfaces/parameter";
 import { RequestWithJsonAndJwt } from "../interfaces/request_jsonjwt";
 

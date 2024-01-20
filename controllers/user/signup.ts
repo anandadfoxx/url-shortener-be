@@ -1,10 +1,10 @@
 import { Response } from "express";
-import { sendError, sendSuccess } from "../../utils/send";
+import { sendError, sendSuccess } from "../../utils/misc/send";
 import getConnection from "../../db/connection";
 import { userSchema } from "../../db/schema";
-import getCurrentDate from "../../utils/date";
-import { DbCollectionName, UserRole } from "../../utils/enum";
-import { encryptPassword } from "../../utils/bcrypt";
+import getCurrentDate from "../../utils/misc/date";
+import { DbCollectionName, UserRole } from "../../utils/misc/enum";
+import { encryptPassword } from "../../utils/encryption/bcrypt";
 import { RequestWithJsonAndJwt } from "../../interfaces/request_jsonjwt";
 
 export default async function signup(req: RequestWithJsonAndJwt, res: Response) {
@@ -23,7 +23,7 @@ export default async function signup(req: RequestWithJsonAndJwt, res: Response) 
     await newUser.save();
 
     sendSuccess(res, {
-      'message': "User has successfully registered. You can proceed to login!"
+      'description': "User has successfully registered. You can proceed to login!"
     });
   } catch (err: any) {
     if (typeof err === 'object') {

@@ -1,10 +1,10 @@
 import { Response } from "express";
-import { sendError, sendSuccess } from "../../utils/send";
+import { sendError, sendSuccess } from "../../utils/misc/send";
 import getConnection from "../../db/connection";
 import { userSchema } from "../../db/schema";
-import { verifyPassword } from "../../utils/bcrypt";
+import { verifyPassword } from "../../utils/encryption/bcrypt";
 import jwt from 'jsonwebtoken';
-import { DbCollectionName } from "../../utils/enum";
+import { DbCollectionName } from "../../utils/misc/enum";
 import { RequestWithJsonAndJwt } from "../../interfaces/request_jsonjwt";
 
 export default async function login(req: RequestWithJsonAndJwt, res: Response) {
