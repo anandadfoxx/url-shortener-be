@@ -21,7 +21,7 @@ app.use(cors());
 app.use(express.json());
 
 // User Profile Section
-app.get('/ping', authenticate, authorize(UserRole.USER_GUEST), ping);
+app.get('/ping', ping);
 app.post('/login', bindBodyOrError(UserParams), login);
 app.post('/signup', bindBodyOrError(UserParams), signup);
 
