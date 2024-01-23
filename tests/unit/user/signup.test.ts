@@ -3,6 +3,7 @@ import getConnection from '../../../db/connection';
 import { userSchema } from '../../../db/schema';
 import { DbCollectionName } from '../../../utils/misc/enum';
 import { encryptPassword } from '../../../utils/encryption/bcrypt';
+import crypto from 'crypto';
 import dotenv from 'dotenv';
 
 let baseUrl = 'http://localhost:8080';
@@ -28,7 +29,9 @@ describe('Register Account', () => {
 
     await User.create({
       email: 'tester123@gmail.com',
-      password: await encryptPassword('tester123!')
+      password: await encryptPassword('tester123!'),
+      isVerified: false,
+      verifyPayload: crypto.randomBytes(48).toString('hex'),
     });
   });
   
@@ -39,7 +42,7 @@ describe('Register Account', () => {
     });
 
     expect(response['success']).toEqual(true);
-    expect(response['description']).toEqual('User has successfully registered. You can proceed to login!');
+    expect(response['description']).toEqual('User has successfully registered. Please check your email for verification.');
   });
 
   it('Register conflict email address', async () => {

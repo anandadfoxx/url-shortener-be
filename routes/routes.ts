@@ -1,18 +1,28 @@
 import express, { Express } from 'express';
-import ping from '../controllers/ping';
-import log from '../middleware/log/logger';
+
+// Enums
+import { UserRole } from '../utils/misc/enum';
+
+// Middlewares
 import cors from 'cors';
+import log from '../middleware/log/logger';
 import bindBodyOrError from '../middleware/bind';
-import UserParams from '../parameters/user';
-import login from '../controllers/user/login';
-import signup from '../controllers/user/signup';
+import ping from '../controllers/ping';
 import authorize from '../middleware/user/authorization';
 import authenticate from '../middleware/user/authentication';
-import { UserRole } from '../utils/misc/enum';
+
+// Parameters
 import ShortenerQueryParams from '../parameters/short_query';
+import ShortenerEntryParams from '../parameters/short_entry';
+import UserParams from '../parameters/user';
+import VerifyParams from '../parameters/verify';
+
+// Routes
+import login from '../controllers/user/login';
+import signup from '../controllers/user/signup';
 import getShortLink from '../controllers/shortener/get_short';
-import ShortenerEntryOptions from '../parameters/short_entry';
 import createShortLink from '../controllers/shortener/create_short';
+import verifyAccount from '../controllers/user/verify';
 
 const app: Express = express();
 
@@ -26,7 +36,8 @@ app.post('/login', bindBodyOrError(UserParams), login);
 app.post('/signup', bindBodyOrError(UserParams), signup);
 
 
-app.get('/:uriShort', bindBodyOrError(ShortenerQueryParams), getShortLink);
-app.post('/short', authenticate, authorize(UserRole.USER_MEMBER), bindBodyOrError(ShortenerEntryOptions), createShortLink);
+app.get(`/:${ShortenerQueryParams[0].param}`, bindBodyOrError(ShortenerQueryParams), getShortLink);
+app.post('/short', authenticate, authorize(UserRole.USER_MEMBER), bindBodyOrError(ShortenerEntryParams), createShortLink);
+app.post(`/verify`, bindBodyOrError(VerifyParams), verifyAccount);
 
 export default app;

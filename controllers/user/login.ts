@@ -14,8 +14,9 @@ export default async function login(req: RequestWithJsonAndJwt, res: Response) {
     const user = await db.findOne({
       email: req!.data!['email']
     });
-    if (!user) throw new Error();
-    if (!await verifyPassword(req!.data!['password'], user.password!)) throw new Error();
+    if (!user) throw new Error("");
+    if (!await verifyPassword(req!.data!['password'], user.password!)) throw new Error("");
+    if (!user.isVerified) throw new Error("not verified");
 
     // Login success, create JWT for next 6 hours
     const token = jwt.sign({
@@ -31,7 +32,14 @@ export default async function login(req: RequestWithJsonAndJwt, res: Response) {
     sendSuccess(res, {
       'token': token
     })
-  } catch (e: any) {
-    sendError(res, 400, "Email or password invalid, please check your input.");
+  } catch (err: any) {
+    switch ((err as Error).message) {
+      case "not verified":
+        sendError(res, 403, "Your account has not been verified, please check your email.");
+        break;
+      default:
+        sendError(res, 400, "Email or password invalid, please check your input.");
+        break;
+    }
   }
 }

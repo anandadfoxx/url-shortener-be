@@ -8,7 +8,9 @@ export const userSchema = new Schema({
     unique: true
   },
   password: String,
-  role: Number
+  role: Number,
+  isVerified: Boolean,
+  verifyPayload: String
 });
 
 export const urlShortSchema = new Schema({
