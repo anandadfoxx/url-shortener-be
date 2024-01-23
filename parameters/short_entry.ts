@@ -1,6 +1,6 @@
 import ParameterOptions from "../interfaces/parameter";
 
-const ShortenerEntryOptions: ParameterOptions[] = [
+const ShortenerEntryParams: ParameterOptions[] = [
   {
     param: 'short_uri',
     emptyable: false,
@@ -16,4 +16,4 @@ const ShortenerEntryOptions: ParameterOptions[] = [
   }
 ];
 
-export default ShortenerEntryOptions;
+export default ShortenerEntryParams;

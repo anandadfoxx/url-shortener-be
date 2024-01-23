@@ -8,10 +8,10 @@ export default function bindBodyOrError(params?: ParameterOptions[]): RequestHan
     let body: object;
     switch (req.method) {
       case 'GET':
-        body = (Object.keys(req.params).length > 0) ? req.params : req.query;
+        body = Object.assign({}, req.query, req.params);
         break;
       case 'DELETE':
-        body = (Object.keys(req.params).length > 0) ? req.params : req.query;
+        body = Object.assign({}, req.query, req.params);
         break;
       default:
         // POST and PUT method, parse the request body

@@ -2,7 +2,7 @@ import ParameterOptions from "../interfaces/parameter";
 
 const ShortenerQueryParams: ParameterOptions[] = [
   {
-    param: 'uriShort',
+    param: 'short_uri',
     emptyable: false
   }
 ]
