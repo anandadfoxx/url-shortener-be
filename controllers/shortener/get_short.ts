@@ -11,7 +11,7 @@ export default async function getShortLink(req: RequestWithJsonAndJwt, res: Resp
     const UrlShort = db.model(DbCollectionName.Shorts, urlShortSchema);
 
     const uriEntry = await UrlShort.findOne({
-      short_uri: req!.data!['uriShort']
+      short_uri: req!.data!['short_uri']
     });
     if (uriEntry === null) throw new Error("Link not found.");
     sendSuccess(res, {
