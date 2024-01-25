@@ -5,7 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "dev": "npx nodemon index.ts",
-    "test": "jest -i",
+    "test": "jest -i --runTestsByPath",
     "ci-build": "npx tsc"
   },
   "author": "Ananda & Hemas",

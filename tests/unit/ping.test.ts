@@ -1,8 +1,7 @@
 import 'jest';
 
-let baseUrl = 'http://localhost:8080';
-
 const apiFetch = async (endpoint: string, method: string) => {
+  let baseUrl = 'http://localhost:8080';
   return await (await fetch(`${baseUrl}${endpoint}`, {
     method: method
   }))

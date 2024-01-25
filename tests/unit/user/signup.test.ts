@@ -6,9 +6,8 @@ import { encryptPassword } from '../../../utils/encryption/bcrypt';
 import crypto from 'crypto';
 import dotenv from 'dotenv';
 
-let baseUrl = 'http://localhost:8080';
-
 const apiFetch = async (endpoint: string, method: string, body?: unknown) => {
+  let baseUrl = 'http://localhost:8080';
   return await (await fetch(`${baseUrl}${endpoint}`, {
     method: method,
     headers: {
