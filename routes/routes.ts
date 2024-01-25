@@ -23,6 +23,8 @@ import signup from '../controllers/user/signup';
 import getShortLink from '../controllers/shortener/get_short';
 import createShortLink from '../controllers/shortener/create_short';
 import verifyAccount from '../controllers/user/verify';
+import deleteShortLink from '../controllers/shortener/delete_short';
+import editShortLink from '../controllers/shortener/edit_short';
 
 const app: Express = express();
 
@@ -32,12 +34,13 @@ app.use(express.json());
 
 // User Profile Section
 app.get('/ping', ping);
-app.post('/login', bindBodyOrError(UserParams), login);
 app.post('/signup', bindBodyOrError(UserParams), signup);
+app.post('/login', bindBodyOrError(UserParams), login);
+app.post(`/verify`, bindBodyOrError(VerifyParams), verifyAccount);
 
 
 app.get(`/:${ShortenerQueryParams[0].param}`, bindBodyOrError(ShortenerQueryParams), getShortLink);
 app.post('/short', authenticate, authorize(UserRole.USER_MEMBER), bindBodyOrError(ShortenerEntryParams), createShortLink);
-app.post(`/verify`, bindBodyOrError(VerifyParams), verifyAccount);
-
+app.put('/short', authenticate, authorize(UserRole.USER_MEMBER), bindBodyOrError(ShortenerEntryParams), editShortLink)
+app.delete(`/:${ShortenerQueryParams[0].param}`, authenticate, authorize(UserRole.USER_MEMBER), bindBodyOrError(ShortenerQueryParams), deleteShortLink);
 export default app;
