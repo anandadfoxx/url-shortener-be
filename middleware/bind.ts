@@ -1,10 +1,10 @@
-import { NextFunction, Request, RequestHandler, Response } from "express";
+import { NextFunction, RequestHandler, Response } from "express";
 import { sendError } from "../utils/misc/send";
 import ParameterOptions from "../interfaces/parameter";
 import { RequestWithJsonAndJwt } from "../interfaces/request_jsonjwt";
 
 export default function bindBodyOrError(params?: ParameterOptions[]): RequestHandler {
-  return function(req: Request, res: Response, next: NextFunction) {
+  return function(req: RequestWithJsonAndJwt, res: Response, next: NextFunction) {
     let body: object;
     switch (req.method) {
       case 'GET':
@@ -36,7 +36,7 @@ export default function bindBodyOrError(params?: ParameterOptions[]): RequestHan
       return;
     }
     
-    (req as RequestWithJsonAndJwt).data = body;
+    req.data = body;
     next();
   }
 }
