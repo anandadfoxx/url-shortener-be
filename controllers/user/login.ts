@@ -36,10 +36,10 @@ export default async function login(req: RequestWithJsonAndJwt, res: Response) {
     switch ((err as Error).message) {
       case "not verified":
         sendError(res, 403, "Your account has not been verified, please check your email.");
-        break;
+        return;
       default:
         sendError(res, 400, "Email or password invalid, please check your input.");
-        break;
+        return;
     }
   }
 }

@@ -9,11 +9,6 @@ const ShortenerEntryParams: ParameterOptions[] = [
     param: 'long_uri',
     emptyable: false
   },
-  {
-    param: 'author',
-    emptyable: true,
-    defaultValue: ""
-  }
 ];
 
 export default ShortenerEntryParams;

@@ -35,10 +35,10 @@ export default async function verifyAccount(req: RequestWithJsonAndJwt, res: Res
       switch (err.message) {
         case "400":
           sendError(res, 400, "Invalid or unknown verification token.");
-          break;
+          return;
         case "410":
           sendError(res, 410, "You are already verified.");
-          break;
+          return;
       }
     }
   }
