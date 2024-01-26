@@ -36,7 +36,7 @@ app.use(express.json());
 app.get('/ping', ping);
 app.post('/signup', bindBodyOrError(UserParams), signup);
 app.post('/login', bindBodyOrError(UserParams), login);
-app.post(`/verify`, bindBodyOrError(VerifyParams), verifyAccount);
+app.get(`/verify`, bindBodyOrError(VerifyParams), verifyAccount);
 
 
 app.get(`/:${ShortenerQueryParams[0].param}`, bindBodyOrError(ShortenerQueryParams), getShortLink);

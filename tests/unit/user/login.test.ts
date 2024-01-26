@@ -66,9 +66,7 @@ describe('Login Account', () => {
     expect(response['description']).toEqual("Your account has not been verified, please check your email.");
   });
   it('Verify account', async () => {
-    const response = await apiFetch('/verify', 'POST', {
-      'payload': verifyPayload
-    });
+    const response = await apiFetch(`/verify?payload=${verifyPayload}`, 'GET');
 
     expect(response['success']).toEqual(true);
     expect(response['description']).toEqual("Your account has been verified successfully, you can proceed to login.");
