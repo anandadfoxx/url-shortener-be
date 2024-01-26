@@ -7,6 +7,7 @@ import { DbCollectionName, UserRole } from "../../utils/misc/enum";
 import { encryptPassword } from "../../utils/encryption/bcrypt";
 import { RequestWithJsonAndJwt } from "../../interfaces/request_jsonjwt";
 import crypto from 'crypto';
+import sendEmail from "../../utils/email/smtp_mailer";
 
 export default async function signup(req: RequestWithJsonAndJwt, res: Response) {
   try {
@@ -24,6 +25,12 @@ export default async function signup(req: RequestWithJsonAndJwt, res: Response) 
     });
 
     await newUser.save();
+
+    sendEmail({
+      to: req!.data!['email'],
+      subject: 'URL Shortener Verification',
+      message: `http://localhost:8080/verify?payload=${newUser.verifyPayload}`,
+    });
 
     sendSuccess(res, {
       'description': "User has successfully registered. Please check your email for verification."
