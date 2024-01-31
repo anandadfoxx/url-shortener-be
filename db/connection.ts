@@ -4,7 +4,16 @@ let conn: typeof mongoose;
 let hasInit: boolean = false;
 
 async function init() {
-  const connUrl = process.env.DATABASE_URL || "";
+  const dbName = (() => {
+    switch (process.env.EXPRESS_STATE!) {
+      case "production":
+        return "urlshortener"
+      default:
+        return "urlshortener_dev"
+    };
+  })();
+
+  const connUrl = `${process.env.DATABASE_URL}/${dbName}` || "";
   console.log('Establishing connection to MongoDB Database... 🚀')
   conn = await mongoose.connect(connUrl);
   hasInit = true;

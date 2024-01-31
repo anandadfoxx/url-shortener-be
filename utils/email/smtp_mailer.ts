@@ -19,7 +19,7 @@ export default async function sendEmail(body: EmailBody) {
     to: body.to,
     cc: body.cc,
     bcc: body.bcc,
-    html: body.message
+    html: body.message,
   };
 
   transporter.sendMail(mailOptions, (err: Error | null, info: SMTPTransport.SentMessageInfo) => {
